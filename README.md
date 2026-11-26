@@ -1,3 +1,3 @@
 # Pygame_Tower
 
-suck my balls twice
+Just another tower game :D
