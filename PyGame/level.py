@@ -125,6 +125,12 @@ class Level:
           player.rect.top = sprite.rect.bottom
           player.velocity_y = 0
 
+    if not player.on_ground and hasattr(player, "has_solid_floor_below"):
+      if player.has_solid_floor_below(self.obstacle_sprites):
+        player.on_ground = True
+        if player.velocity_y > 0:
+          player.velocity_y = 0
+
   def check_death_collision(self, player):
     if player.state == "normal":
       for sprite in self.death_sprites:

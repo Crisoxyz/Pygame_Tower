@@ -55,7 +55,8 @@ class Player(pygame.sprite.Sprite):
     self.current_anim = "idle"
     self.frame_index = 0.0
     self.facing_right = True
-    self.image = self._create_initial_image()
+    self.fallback_image = self._create_initial_image()
+    self.image = self.fallback_image.copy()
 
     self.rect = pygame.Rect(x, y, PLAYER_WIDTH, PLAYER_HEIGHT)
     self.velocity_x = 0
@@ -111,6 +112,12 @@ class Player(pygame.sprite.Sprite):
     except (pygame.error, FileNotFoundError):
       pass
     return frames
+
+  def has_solid_floor_below(self, obstacle_sprites):
+    if self.velocity_y < 0:
+      return False
+    foot_probe = pygame.Rect(self.rect.x + 1, self.rect.bottom, max(1, self.rect.width - 2), 2)
+    return any(sprite.rect.colliderect(foot_probe) for sprite in obstacle_sprites)
 
   def spawn_dust(self, mode="jump", impact_speed=0.0):
     if mode == "land":
@@ -264,7 +271,7 @@ class Player(pygame.sprite.Sprite):
 
     frames = self.animations.get(self.current_anim, [])
     if not frames:
-      return
+      frames = self.animations.get("idle") or [self.fallback_image]
 
     speed = self.animation_speeds.get(self.current_anim, 0.15)
     self.frame_index = (self.frame_index + speed) % len(frames)

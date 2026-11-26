@@ -56,23 +56,16 @@ TRANSITION_BAND_COLOR = (0, 0, 0)
 
 # Nomi dei layer in Tiled
 SOLID_LAYER_NAMES = [
-    "muri",
-    "solidi",
-    "walls",
-    "terrain",
-    "collisioni",
-    "tile layer 1",
+    "muri"
 ]
 DEATH_LAYER_NAMES = [
     "morte",
     "spike",
-    "spikes",
-    "trap",
+    "spikes"
 ]
 TRANSITION_LAYER_NAMES = [
     "transazione",
-    "transition",
-    "transizioni",
+    "transizioni"
 ]
 
 # Particelle quando il personaggio muore
